@@ -9,14 +9,19 @@ import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ElasticSearchConfiguration {
+    @Value("${elasticsearch.host}")
     private final String host;
+    @Value("${elasticsearch.port}")
     private final Integer port;
+    @Value("${elasticsearch.username}")
     private final String username;
+    @Value("${elasticsearch.password}")
     private final String password;
 
     public ElasticSearchConfiguration(String host, Integer port, String username, String password) {
@@ -37,12 +42,10 @@ public class ElasticSearchConfiguration {
 
         CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
         credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username, password));
-        RestClientBuilder builder = RestClient.builder(new HttpHost(host, port)).setHttpClientConfigCallback(new RestClientBuilder.HttpClientConfigCallback() {
-            @Override
-            public HttpAsyncClientBuilder customizeHttpClient(HttpAsyncClientBuilder httpAsyncClientBuilder) {
-                return httpAsyncClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
-            }
-        });
+
+        RestClientBuilder builder = RestClient.builder(new HttpHost(host, port))
+            .setHttpClientConfigCallback(httpAsyncClientBuilder -> httpAsyncClientBuilder.setDefaultCredentialsProvider(credentialsProvider));
+
         RestHighLevelClient client = new RestHighLevelClient(builder);
         return client;
     }
