@@ -5,7 +5,6 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
@@ -15,13 +14,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ElasticSearchConfiguration {
-    @Value("${elasticsearch.host}")
     private final String host;
-    @Value("${elasticsearch.port}")
     private final Integer port;
-    @Value("${elasticsearch.username}")
     private final String username;
-    @Value("${elasticsearch.password}")
     private final String password;
 
     public ElasticSearchConfiguration(String host, Integer port, String username, String password) {
