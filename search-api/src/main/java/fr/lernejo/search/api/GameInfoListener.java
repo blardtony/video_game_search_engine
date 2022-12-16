@@ -22,7 +22,7 @@ public class GameInfoListener {
         this.restHighLevelClient = restHighLevelClient;
     }
 
-    @RabbitListener(queues = {GAME_INFO_QUEUE})
+    @RabbitListener(queues = GAME_INFO_QUEUE)
     public void onMessage(String message, @Header("game_id") String id) throws IOException {
         IndexRequest indexRequest = new IndexRequest("games");
         indexRequest.source(message, XContentType.JSON);
