@@ -9,7 +9,7 @@ import java.time.Duration;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LauncherTest {
-    private String path = "src/test/resources";
+    private final String path = "src/test/resources";
     @Test
     void main_terminates_before_5_sec() {
         assertTimeoutPreemptively(
