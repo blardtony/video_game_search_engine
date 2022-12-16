@@ -25,7 +25,7 @@ class LauncherTest {
     }
 
     @Test
-    void gamesMessagesThrowIOExceptionWithFileNotExist() throws IOException {
+    void gamesMessagesThrowIOExceptionWithFileNotExist() {
         File gameFile = new File(this.path);
         String jsonGameFilePath = gameFile.getAbsolutePath() + "/game.json";
         assertThrows(IOException.class, () -> Launcher.main(new String[]{jsonGameFilePath}));
